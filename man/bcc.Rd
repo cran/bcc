@@ -4,64 +4,39 @@
 \alias{bcc}
 \title{Beta Control Charts}
 \usage{
-bcc(data, type = c("1", "2"), sizes, center, std.dev, limits, data.name,
-  labels, newdata, newsizes, newdata.name, newlabels, nsigmas = 3,
-  confidence.level = 0.9, rules = shewhart.rules, plot = TRUE, ...)
+bcc(data, sizes = NULL, type, title = NULL)
 }
 \arguments{
-\item{data}{a data frame, a matrix or a vector containing observed data for the variable to chart. Each row of a data frame or a matrix, and each value of a vector, refers to a sample or ''rationale group''.}
+\item{data}{A numeric vector of data values to be plotted on the control chart.}
 
-\item{type}{a character string specifying the group statistics to compute. There are two possible types: \code{1} for discrete data and \code{2} for continuous data.}
+\item{sizes}{An optional numeric vector of sample sizes. This parameter is required for type 1 charts, which are designed for discrete data.}
 
-\item{sizes}{a value or a vector of values specifying the sample sizes associated with each group. If data is continuous this parameter should be ignored}
+\item{type}{An integer representing the type of control chart. There are two possible types: \code{1} for discrete data (such as proportions or counts) and \code{2} for continuous data.}
 
-\item{center}{a value specifying the center of group statistics or the ''target'' value of the process.}
-
-\item{std.dev}{a value or an available method specifying the within-group standard deviation(s) of the process.}
-
-\item{limits}{a two-values vector specifying control limits.}
-
-\item{data.name}{a string specifying the name of the variable which appears on the plots. If not provided is taken from the object given as data.}
-
-\item{labels}{a character vector of labels for each group.}
-
-\item{newdata}{a data frame, matrix or vector, as for the \code{data} argument, providing further data to plot but not included in the computations.}
-
-\item{newsizes}{a vector as for the \code{sizes} argument providing further data sizes to plot but not included in the computations.}
-
-\item{newdata.name}{a string specifying the name of the variable which appears on the plots. If not provided is taken from the object given as newdata.}
-
-\item{newlabels}{a character vector of labels for each new group defined in the argument \code{newdata}.}
-
-\item{nsigmas}{a numeric value specifying the number of sigmas to use for computing control limits. It is ignored when the \code{confidence.level} argument is  provided.}
-
-\item{confidence.level}{a numeric value between 0 and 1 specifying the confidence level of the computed probability limits.}
-
-\item{rules}{a value or a vector of values specifying the rules to apply to the chart. See \link[qcc]{shewhart.rules} for possible values and their meaning.}
-
-\item{plot}{logical. If \code{TRUE} a Shewhart chart is plotted.}
-
-\item{...}{further arguments are ignored.}
+\item{title}{An optional string specifying the title of the plot.}
 }
 \value{
-Returns an object of class \code{'qcc'}.
+A plot of the Beta control chart.
 }
 \description{
-Create an object of class \code{'qcc'} to perform statistical quality control. This object may then be used to plot Beta Control Charts.
+Creates and displays a Beta control chart using the specified data, sample sizes, and type. This is the main function for generating control charts in this package.
 }
 \details{
-The Beta Chart presents the control limits based on the Beta probability distribution.  It was can be used for monitoring fraction data from Binomial distribution as replacement of the p-Charts. The Beta Chart was applied for monitoring the variables in three real studies, and it was compared to the control limits with three schemes. The comparative analysis showed that: (i) Beta approximation to the Binomial distribution was more appropriate with values confined in the [0, 1]- interval; and (ii) the charts proposed were more sensitive to the average run length (ARL), in both in-control and out-of-control processes monitoring. The Beta Charts outperform the Shewhart control charts analyzed for monitoring fraction data.This package was made based on the qcc package. See \link[qcc]{qcc}.
+The Beta Chart presents control limits based on the Beta probability distribution. It is used for monitoring fraction data from a Binomial distribution as a replacement for p-Charts. The Beta Chart has been applied in three real studies, demonstrating its effectiveness. Comparative analysis revealed that: (i) the Beta approximation to the Binomial distribution is more appropriate for values confined within the \code{[0, 1]} interval; and (ii) the proposed charts are more sensitive to the average run length (ARL) in both in-control and out-of-control process monitoring. Overall, the Beta Charts outperform the Shewhart control charts for monitoring fraction data.
 }
 \examples{
-data("Drapper1998data")
-bcc(data = Drapper1998data, type = "2")
-data("Montgomery2005")
-bcc(data=Montgomery2005$Defective, sizes = Montgomery2005$Sample, type=1)
+# Example for type 1 chart with discrete data
+data <- c(0.12, 0.18, 0.14, 0.28, 0.22)
+sizes <- c(101, 98, 110, 105, 95)
+bcc(data, sizes, type=1, title="Beta Control Chart for Discrete Data")
 
+# Example for type 2 chart with continuous data
+data <- c(0.59, 0.67, 0.61, 0.70, 0.59)
+bcc(data, type=2, title="Beta Control Chart for Continuous Data")
 
-}
-\references{
-SANT'ANNA, Ângelo M. O; CATEN, Carla Schwengber ten. Beta control charts forsave monitoring fraction data. Expert Systems With Applications, p. 10236-10243. 1 set. 2012.
+# Example changing the title of the chart
+data <- c(0.07, 0.13, 0.21, 0.25, 0.19)
+sizes <- c(52, 49, 51, 53, 48)
+bcc(data, sizes, type=1, title="Custom Title: Beta Control Chart for Discrete Data")
 
-Scrucca, L. (2004). qcc: an R package for quality control charting and statistical process control. \emph{R News} 4/1, 11-17.
 }
